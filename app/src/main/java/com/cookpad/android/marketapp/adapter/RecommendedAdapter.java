@@ -59,6 +59,11 @@ public class RecommendedAdapter extends RecyclerView.Adapter<RecommendedAdapter.
         this.items.add(item);
     }
 
+    public void replace(List<Item> items) {
+        this.items.clear();
+        this.items.addAll(items);
+    }
+
     public void setListener(ClickListener listener) {
         this.listener = listener;
     }

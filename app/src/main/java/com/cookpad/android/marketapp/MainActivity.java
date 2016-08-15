@@ -1,20 +1,21 @@
 package com.cookpad.android.marketapp;
 
 import android.databinding.DataBindingUtil;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.Toast;
 
 import com.cookpad.android.marketapp.adapter.RecommendedAdapter;
-import com.cookpad.android.marketapp.api.MarketService;
 import com.cookpad.android.marketapp.api.MarketServiceHolder;
 import com.cookpad.android.marketapp.databinding.ActivityMainBinding;
 import com.cookpad.android.marketapp.model.Item;
 
-import rx.Scheduler;
+import java.util.List;
+
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class MainActivity extends AppCompatActivity {
@@ -41,12 +42,22 @@ public class MainActivity extends AppCompatActivity {
         adapter.add(new Item(1, "Apple", 1200));
         adapter.add(new Item(2, "Banana", 1000));
         adapter.notifyDataSetChanged();
+        updateRecommendedList();
     }
 
     private void updateRecommendedList() {
         MarketServiceHolder.getMarketService().getRecommendedItems()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .
+                .subscribe(new Action1<List<Item>>() {
+                    @Override
+                    public void call(List<Item> items) {
+                        RecommendedAdapter adapter = (RecommendedAdapter) binding.recyclerView.getAdapter();
+                        if (adapter != null) {
+                            adapter.replace(items);
+                            adapter.notifyDataSetChanged();
+                        }
+                    }
+                });
     }
 }
