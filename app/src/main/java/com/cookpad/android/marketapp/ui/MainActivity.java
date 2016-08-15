@@ -24,5 +24,6 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager manager = getSupportFragmentManager();
         MainActivityFragmentPagerAdapter adapter = new MainActivityFragmentPagerAdapter(manager);
         binding.viewPager.setAdapter(adapter);
+        binding.viewPager.setCurrentItem(1);
     }
 }

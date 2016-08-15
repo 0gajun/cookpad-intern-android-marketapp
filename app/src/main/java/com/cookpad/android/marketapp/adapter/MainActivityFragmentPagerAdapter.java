@@ -5,7 +5,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.cookpad.android.marketapp.model.Item;
 import com.cookpad.android.marketapp.ui.CategoriesFragment;
 import com.cookpad.android.marketapp.ui.ItemsInCartFragment;
 import com.cookpad.android.marketapp.ui.RecommendedItemsFragment;
@@ -22,11 +21,11 @@ public class MainActivityFragmentPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position) {
             case 0:
-                return RecommendedItemsFragment.newInstance();
-            case 1:
-                return CategoriesFragment.newInstance();
-            case 2:
                 return ItemsInCartFragment.newInstance();
+            case 1:
+                return RecommendedItemsFragment.newInstance();
+            case 2:
+                return CategoriesFragment.newInstance();
         }
         return null;
     }
@@ -40,11 +39,11 @@ public class MainActivityFragmentPagerAdapter extends FragmentPagerAdapter {
     public CharSequence getPageTitle(int position) {
         switch (position) {
             case 0:
-                return RecommendedItemsFragment.TITLE;
-            case 1:
-                return CategoriesFragment.TITLE;
-            case 2:
                 return ItemsInCartFragment.TITLE;
+            case 1:
+                return RecommendedItemsFragment.TITLE;
+            case 2:
+                return CategoriesFragment.TITLE;
         }
         return super.getPageTitle(position);
     }
