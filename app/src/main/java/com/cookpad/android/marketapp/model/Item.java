@@ -18,6 +18,9 @@ public class Item {
     @SerializedName("image_url")
     private String imageUrl;
 
+    @SerializedName("description")
+    private String description;
+
     public Item(int id, String name, int price) {
         this.id = id;
         this.name = name;
@@ -34,6 +37,10 @@ public class Item {
 
     public String getImageUrl() {
         return imageUrl;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public int getPrice() {

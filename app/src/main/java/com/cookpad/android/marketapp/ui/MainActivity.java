@@ -1,5 +1,6 @@
 package com.cookpad.android.marketapp.ui;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -35,7 +36,9 @@ public class MainActivity extends AppCompatActivity {
         adapter.setListener(new RecommendedAdapter.ClickListener() {
             @Override
             public void onClickItem(Item item, View view) {
-                Toast.makeText(MainActivity.this, item.getName(), Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, ItemDetailActivity.class);
+                intent.putExtra(ItemDetailActivity.INTENT_KEY.ITEM_ID.name(), item.getId());
+                startActivity(intent);
             }
         });
 

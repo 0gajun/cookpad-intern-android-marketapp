@@ -2,4 +2,6 @@
     <string name="app_name">MarketApp</string>
     <string name="item_price_holder">%d円</string>
     <string name="item_count_holder">数量 : %d</string>
+    <string name="content_desc_item_thumbnail">商品画像</string>
+    <string name="add_cart">カートに入れる</string>
 </resources>
