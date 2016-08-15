@@ -21,9 +21,15 @@ import java.util.List;
 public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     private List<Item> items = new ArrayList<>();
     private ClickListener listener;
+    private ClickCountModBtnListener modBtnListener;
 
     public interface ClickListener {
         void onClickItem(Item item, View view);
+    }
+
+    public interface ClickCountModBtnListener {
+        void onClickIncrement(Item item, View view);
+        void onClickDecrement(Item item, View view);
     }
 
     @Override
@@ -42,18 +48,42 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
         if (item.getCount() == 0) {
             holder.binding.itemCount.setVisibility(View.GONE);
+            holder.binding.countModBtns.setVisibility(View.GONE);
         } else {
             holder.binding.itemCount.setVisibility(View.VISIBLE);
+            holder.binding.countModBtns.setVisibility(View.VISIBLE);
             holder.binding.itemCount.setText(context.getString(R.string.item_count_holder, item.getCount()));
         }
 
         Glide.with(context).load(item.getImageUrl()).into(holder.binding.itemThumbnail);
 
+        setOnClickListeners(holder, item);
+    }
+
+    private void setOnClickListeners(final ViewHolder holder, final Item item) {
         holder.binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (listener != null) {
                     listener.onClickItem(item, view);
+                }
+            }
+        });
+
+        holder.binding.incrementCountBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (listener != null) {
+                    modBtnListener.onClickIncrement(item, view);
+                }
+            }
+        });
+
+        holder.binding.decrementCountBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (listener != null) {
+                    modBtnListener.onClickDecrement(item, view);
                 }
             }
         });
@@ -75,6 +105,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
 
     public void setListener(ClickListener listener) {
         this.listener = listener;
+    }
+
+    public void setModBtnListener(ClickCountModBtnListener modBtnListener) {
+        this.modBtnListener = modBtnListener;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

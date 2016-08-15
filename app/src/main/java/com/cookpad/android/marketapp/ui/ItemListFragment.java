@@ -26,7 +26,7 @@ import rx.schedulers.Schedulers;
  * Created by junya-ogasawara on 2016/08/15.
  */
 public class ItemListFragment extends Fragment {
-    private ItemsFragmentBinding binding;
+    protected ItemsFragmentBinding binding;
 
     public static ItemListFragment newInstance(Bundle bundle) {
         ItemListFragment f = new ItemListFragment();

@@ -4,6 +4,7 @@ import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
@@ -12,6 +13,7 @@ import com.cookpad.android.marketapp.R;
 import com.cookpad.android.marketapp.api.MarketServiceHolder;
 import com.cookpad.android.marketapp.databinding.ItemDetailActivityBinding;
 import com.cookpad.android.marketapp.model.CartItem;
+import com.cookpad.android.marketapp.model.CartItem_Selector;
 import com.cookpad.android.marketapp.model.Item;
 import com.cookpad.android.marketapp.model.OrmaDatabase;
 import com.cookpad.android.marketapp.model.db.OrmaHolder;
@@ -94,19 +96,24 @@ public class ItemDetailActivity extends AppCompatActivity {
 
     private void addCart() {
         final OrmaDatabase orma = OrmaHolder.get(this);
-
-        orma.selectFromCartItem().itemIdEq(item.getId())
-                .executeAsObservable()
-                .subscribe(new Action1<CartItem>() {
-                    @Override
-                    public void call(CartItem cartItem) {
-                        if (cartItem == null) {
-                            createNewCartItem();
-                        } else {
-                            updateCartItem(cartItem, 1);
+        CartItem_Selector selector = orma.selectFromCartItem().itemIdEq(item.getId());
+        if (selector.count() == 0) {
+            createNewCartItem();
+        } else {
+            selector.executeAsObservable()
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new Action1<CartItem>() {
+                        @Override
+                        public void call(CartItem cartItem) {
+                            if (cartItem == null) {
+                                createNewCartItem();
+                            } else {
+                                updateCartItem(cartItem, 1);
+                            }
                         }
-                    }
-                });
+                    });
+        }
     }
 
     private void updateCartItem(final CartItem cartItem, final int addCount) {

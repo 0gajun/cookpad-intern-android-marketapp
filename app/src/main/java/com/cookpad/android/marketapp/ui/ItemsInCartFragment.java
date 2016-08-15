@@ -1,7 +1,14 @@
 package com.cookpad.android.marketapp.ui;
 
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.cookpad.android.marketapp.R;
+import com.cookpad.android.marketapp.adapter.ItemAdapter;
 import com.cookpad.android.marketapp.api.MarketServiceHolder;
 import com.cookpad.android.marketapp.model.CartItem;
 import com.cookpad.android.marketapp.model.Item;
@@ -14,6 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import rx.AsyncEmitter;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
@@ -26,6 +34,27 @@ import rx.schedulers.Schedulers;
 public class ItemsInCartFragment extends ItemListFragment {
     public static String TITLE = "カートの中身";
 
+    private Map<Integer, CartItem> cartItemMap;
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View v = super.onCreateView(inflater, container, savedInstanceState);
+
+        ItemAdapter adapter = (ItemAdapter) binding.recyclerView.getAdapter();
+        adapter.setModBtnListener(new ItemAdapter.ClickCountModBtnListener() {
+            @Override
+            public void onClickIncrement(Item item, View view) {
+                incrementCartItem(item);
+            }
+
+            @Override
+            public void onClickDecrement(Item item, View view) {
+                decrementCartItem(item);
+            }
+        });
+        return v;
+    }
+
     public static ItemsInCartFragment newInstance() {
         return new ItemsInCartFragment();
     }
@@ -34,6 +63,7 @@ public class ItemsInCartFragment extends ItemListFragment {
     protected void updateItemList() {
         final OrmaDatabase orma = OrmaHolder.get(getActivity());
         orma.selectFromCartItem()
+                .where("count > 0")
                 .executeAsObservable()
                 .observeOn(AndroidSchedulers.mainThread())
                 .toList()
@@ -60,12 +90,13 @@ public class ItemsInCartFragment extends ItemListFragment {
                         for (CartItem ci : cartItems) {
                             map.put(ci.itemId, ci);
                         }
-                        update(map);
+                        updateListView(map);
                     }
                 });
     }
 
-    private void update(final Map<Integer, CartItem> itemMap) {
+    private void updateListView(final Map<Integer, CartItem> itemMap) {
+        cartItemMap = itemMap;
         MarketServiceHolder.getMarketService()
                 .getItems()
                 .subscribeOn(Schedulers.io())
@@ -82,7 +113,7 @@ public class ItemsInCartFragment extends ItemListFragment {
                                 .map(new Func1<Item, Item>() {
                                     @Override
                                     public Item call(Item item) {
-                                        item.setCount(itemMap.get(item.getId()).count);
+                                        item.setCount(cartItemMap.get(item.getId()).count);
                                         return item;
                                     }
                                 })
@@ -95,7 +126,53 @@ public class ItemsInCartFragment extends ItemListFragment {
                                         updateList(items);
                                     }
                                 });
+
                     }
                 });
+
+    }
+
+    private void incrementCartItem(Item item) {
+        updateCartItem(item, 1);
+    }
+
+    private void decrementCartItem(Item item) {
+        updateCartItem(item, -1);
+    }
+
+    // TODO: CartItemはAdapter分けるべき
+    // TODO: トランザクションはらないとおかしなことになるかも
+    private void updateCartItem(final Item target, final int delta) {
+        final OrmaDatabase orma = OrmaHolder.get(getActivity());
+        orma.selectFromCartItem().itemIdEq(target.getId())
+                .executeAsObservable()
+                .subscribeOn(Schedulers.io())
+                .subscribe(new Action1<CartItem>() {
+                    @Override
+                    public void call(final CartItem cartItem) {
+                        Observable.fromAsync(new Action1<AsyncEmitter<CartItem>>() {
+                            @Override
+                            public void call(AsyncEmitter<CartItem> emitter) {
+                                orma.updateCartItem()
+                                        .itemIdEq(target.getId())
+                                        .count(cartItem.count + delta)
+                                        .execute();
+                                emitter.onNext(null); //FIXME
+                                emitter.onCompleted();
+                            }
+                        }, AsyncEmitter.BackpressureMode.NONE)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(new Action1<CartItem>() {
+                                    @Override
+                                    public void call(CartItem cartItem) {
+                                        updateItemList();
+                                    }
+                                });
+
+                    }
+                });
+
+
     }
 }

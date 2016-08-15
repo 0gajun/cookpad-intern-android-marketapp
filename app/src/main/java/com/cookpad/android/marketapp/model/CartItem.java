@@ -21,7 +21,7 @@ public class CartItem {
     @Column
     public int price;
 
-    @Column(value = "0")
+    @Column(defaultExpr = "0")
     public int count;
 
     public CartItem() {
