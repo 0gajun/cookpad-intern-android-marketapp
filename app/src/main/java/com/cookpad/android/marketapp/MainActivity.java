@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.cookpad.android.marketapp.adapter.RecommendedAdapter;
+import com.cookpad.android.marketapp.api.MarketService;
+import com.cookpad.android.marketapp.api.MarketServiceHolder;
 import com.cookpad.android.marketapp.databinding.ActivityMainBinding;
 import com.cookpad.android.marketapp.model.Item;
 
