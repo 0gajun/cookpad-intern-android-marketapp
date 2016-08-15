@@ -3,9 +3,11 @@ package com.cookpad.android.marketapp.ui;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.cookpad.android.marketapp.R;
 import com.cookpad.android.marketapp.adapter.ItemAdapter;
@@ -16,10 +18,8 @@ import com.cookpad.android.marketapp.model.OrmaDatabase;
 import com.cookpad.android.marketapp.model.db.OrmaHolder;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import rx.AsyncEmitter;
 import rx.Observable;
@@ -35,6 +35,16 @@ public class ItemsInCartFragment extends ItemListFragment {
     public static String TITLE = "カートの中身";
 
     private Map<Integer, CartItem> cartItemMap;
+
+    public static ItemsInCartFragment newInstance() {
+        return new ItemsInCartFragment();
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -62,8 +72,25 @@ public class ItemsInCartFragment extends ItemListFragment {
         updateItemList();
     }
 
-    public static ItemsInCartFragment newInstance() {
-        return new ItemsInCartFragment();
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.send_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.send_action:
+                doPurchase();
+                return true;
+
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void doPurchase() {
+
     }
 
     @Override
