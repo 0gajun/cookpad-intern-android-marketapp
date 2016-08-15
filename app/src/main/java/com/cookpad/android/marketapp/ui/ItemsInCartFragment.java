@@ -55,6 +55,13 @@ public class ItemsInCartFragment extends ItemListFragment {
         return v;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        // FIXME: 2回呼ばれてる(Baseクラスでも)
+        updateItemList();
+    }
+
     public static ItemsInCartFragment newInstance() {
         return new ItemsInCartFragment();
     }
