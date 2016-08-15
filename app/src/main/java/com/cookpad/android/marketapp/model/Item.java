@@ -32,6 +32,10 @@ public class Item {
         return name;
     }
 
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
     public int getPrice() {
         return price;
     }

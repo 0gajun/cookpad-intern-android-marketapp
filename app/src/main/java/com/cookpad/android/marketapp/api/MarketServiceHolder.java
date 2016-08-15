@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by junya-ogasawara on 2016/08/15.
  */
 public class MarketServiceHolder {
-    private static final String ENDPOINT = "";
+    private static final String ENDPOINT = "http://fierce-beach-89314.herokuapp.com";
     private static MarketService marketService;
 
     public static MarketService getMarketService() {

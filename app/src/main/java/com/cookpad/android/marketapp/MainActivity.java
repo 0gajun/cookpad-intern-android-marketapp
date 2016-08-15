@@ -38,10 +38,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        adapter.add(new Item(0, "Orange", 1000));
-        adapter.add(new Item(1, "Apple", 1200));
-        adapter.add(new Item(2, "Banana", 1000));
-        adapter.notifyDataSetChanged();
         updateRecommendedList();
     }
 
