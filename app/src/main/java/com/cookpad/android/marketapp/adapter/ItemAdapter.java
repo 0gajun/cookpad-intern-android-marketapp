@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Created by junya-ogasawara on 2016/08/15.
  */
-public class RecommendedAdapter extends RecyclerView.Adapter<RecommendedAdapter.ViewHolder> {
+public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
     private List<Item> items = new ArrayList<>();
     private ClickListener listener;
 
