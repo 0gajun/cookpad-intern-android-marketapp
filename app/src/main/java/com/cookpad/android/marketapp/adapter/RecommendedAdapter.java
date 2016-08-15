@@ -1,12 +1,11 @@
 package com.cookpad.android.marketapp.adapter;
 
+import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Interpolator;
 
 import com.cookpad.android.marketapp.R;
 import com.cookpad.android.marketapp.databinding.CellRecommendedBinding;
@@ -36,7 +35,11 @@ public class RecommendedAdapter extends RecyclerView.Adapter<RecommendedAdapter.
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         final Item item = items.get(position);
+        final Context context = holder.itemView.getContext();
         holder.binding.itemName.setText(item.getName());
+        holder.binding.itemPrice.setText(context.getString(R.string.item_price_holder, item.getPrice()));
+        holder.binding.itemCount.setText(context.getString(R.string.item_count_holder, 1)); // FIXME: COUNT
+
         holder.binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

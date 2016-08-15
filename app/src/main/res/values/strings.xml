@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">MarketApp</string>
+    <string name="item_price_holder">%d円</string>
+    <string name="item_count_holder">数量 : %d</string>
 </resources>
