@@ -13,6 +13,10 @@ import com.cookpad.android.marketapp.api.MarketServiceHolder;
 import com.cookpad.android.marketapp.databinding.ActivityMainBinding;
 import com.cookpad.android.marketapp.model.Item;
 
+import rx.Scheduler;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
 public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
@@ -37,5 +41,12 @@ public class MainActivity extends AppCompatActivity {
         adapter.add(new Item(1, "Apple", 1200));
         adapter.add(new Item(2, "Banana", 1000));
         adapter.notifyDataSetChanged();
+    }
+
+    private void updateRecommendedList() {
+        MarketServiceHolder.getMarketService().getRecommendedItems()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .
     }
 }
