@@ -52,7 +52,7 @@ public class ItemListFragment extends Fragment {
     }
 
     protected void updateItemList() {
-        MarketServiceHolder.getMarketService().getRecommendedItems()
+        MarketServiceHolder.getMarketService().getItems()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Action1<List<Item>>() {
