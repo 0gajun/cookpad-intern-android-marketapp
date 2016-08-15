@@ -4,4 +4,6 @@
     <string name="item_count_holder">数量 : %d</string>
     <string name="content_desc_item_thumbnail">商品画像</string>
     <string name="add_cart">カートに入れる</string>
+    <string name="toast_msg_success_adding_cart">カートに追加しました</string>
+    <string name="item_count_in_cart">カート内の個数 : %d個</string>
 </resources>

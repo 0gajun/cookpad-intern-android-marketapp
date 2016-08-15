@@ -44,6 +44,14 @@
             android:onClick="@{activity.onClickAddCartButton}"
             android:text="@string/add_cart"/>
 
+        <TextView
+            android:id="@+id/item_cart_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/add_cart_btn"
+            android:layout_centerHorizontal="true"
+            tool:text="カート内の現在の個数 : 1個"/>
+
     </RelativeLayout>
 
 </layout>

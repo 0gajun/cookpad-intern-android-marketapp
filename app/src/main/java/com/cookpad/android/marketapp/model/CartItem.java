@@ -26,4 +26,11 @@ public class CartItem {
 
     public CartItem() {
     }
+
+    public CartItem(Item item, int count) {
+        this.itemId = item.getId();
+        this.name = item.getName();
+        this.price = item.getPrice();
+        this.count = count;
+    }
 }
