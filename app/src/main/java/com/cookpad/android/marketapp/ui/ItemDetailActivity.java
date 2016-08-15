@@ -33,6 +33,7 @@ public class ItemDetailActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.item_detail_activity);
+        binding.setActivity(this);
 
         Item item = (Item) getIntent().getSerializableExtra(INTENT_KEY.ITEM.name());
         setupView(item);
