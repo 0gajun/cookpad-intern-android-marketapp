@@ -1,10 +1,13 @@
 package com.cookpad.android.marketapp.adapter;
 
+import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+import com.cookpad.android.marketapp.model.Item;
 import com.cookpad.android.marketapp.ui.CategoriesFragment;
+import com.cookpad.android.marketapp.ui.ItemsInCartFragment;
 import com.cookpad.android.marketapp.ui.RecommendedItemsFragment;
 
 /**
@@ -22,13 +25,15 @@ public class MainActivityFragmentPagerAdapter extends FragmentPagerAdapter {
                 return RecommendedItemsFragment.newInstance();
             case 1:
                 return CategoriesFragment.newInstance();
+            case 2:
+                return ItemsInCartFragment.newInstance();
         }
         return null;
     }
 
     @Override
     public int getCount() {
-        return 2;
+        return 3;
     }
 
     @Override
@@ -38,6 +43,8 @@ public class MainActivityFragmentPagerAdapter extends FragmentPagerAdapter {
                 return RecommendedItemsFragment.TITLE;
             case 1:
                 return CategoriesFragment.TITLE;
+            case 2:
+                return ItemsInCartFragment.TITLE;
         }
         return super.getPageTitle(position);
     }

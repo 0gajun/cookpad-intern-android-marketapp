@@ -23,6 +23,8 @@ public class Item implements Serializable {
     @SerializedName("description")
     private String description;
 
+    private int count = 0;
+
     public Item(int id, String name, int price) {
         this.id = id;
         this.name = name;
@@ -47,5 +49,13 @@ public class Item implements Serializable {
 
     public int getPrice() {
         return price;
+    }
+
+    public int getCount() {
+        return count;
+    }
+
+    public void setCount(int count) {
+        this.count = count;
     }
 }

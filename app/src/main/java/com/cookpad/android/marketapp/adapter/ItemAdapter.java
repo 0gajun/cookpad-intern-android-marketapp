@@ -39,7 +39,14 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ViewHolder> {
         final Context context = holder.itemView.getContext();
         holder.binding.itemName.setText(item.getName());
         holder.binding.itemPrice.setText(context.getString(R.string.item_price_holder, item.getPrice()));
-        holder.binding.itemCount.setText(context.getString(R.string.item_count_holder, 1)); // FIXME: COUNT
+
+        if (item.getCount() == 0) {
+            holder.binding.itemCount.setVisibility(View.GONE);
+        } else {
+            holder.binding.itemCount.setVisibility(View.VISIBLE);
+            holder.binding.itemCount.setText(context.getString(R.string.item_count_holder, item.getCount()));
+        }
+
         Glide.with(context).load(item.getImageUrl()).into(holder.binding.itemThumbnail);
 
         holder.binding.getRoot().setOnClickListener(new View.OnClickListener() {

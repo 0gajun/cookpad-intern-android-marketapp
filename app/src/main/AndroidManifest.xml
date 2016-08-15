@@ -19,6 +19,7 @@
         </activity>
         <activity android:name=".ui.ItemDetailActivity" />
         <activity android:name=".ui.CategoryItemsActivity" />
+        <activity android:name=".ui.ItemsInCartActivity" />
     </application>
 
 </manifest>
