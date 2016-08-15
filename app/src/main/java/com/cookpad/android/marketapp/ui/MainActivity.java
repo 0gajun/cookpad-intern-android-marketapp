@@ -1,4 +1,4 @@
-package com.cookpad.android.marketapp;
+package com.cookpad.android.marketapp.ui;
 
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 import android.widget.Toast;
 
+import com.cookpad.android.marketapp.R;
 import com.cookpad.android.marketapp.adapter.RecommendedAdapter;
 import com.cookpad.android.marketapp.api.MarketServiceHolder;
 import com.cookpad.android.marketapp.databinding.ActivityMainBinding;
