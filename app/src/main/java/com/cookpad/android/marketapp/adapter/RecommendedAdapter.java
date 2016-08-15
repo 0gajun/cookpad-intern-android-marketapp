@@ -6,6 +6,7 @@ import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Interpolator;
 
 import com.cookpad.android.marketapp.R;
 import com.cookpad.android.marketapp.databinding.CellRecommendedBinding;
@@ -19,6 +20,11 @@ import java.util.List;
  */
 public class RecommendedAdapter extends RecyclerView.Adapter<RecommendedAdapter.ViewHolder> {
     private List<Item> items = new ArrayList<>();
+    private ClickListener listener;
+
+    public interface ClickListener {
+        void onClickItem(Item item, View view);
+    }
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -29,8 +35,16 @@ public class RecommendedAdapter extends RecyclerView.Adapter<RecommendedAdapter.
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        Item item = items.get(position);
+        final Item item = items.get(position);
         holder.binding.itemName.setText(item.getName());
+        holder.binding.getRoot().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (listener != null) {
+                    listener.onClickItem(item, view);
+                }
+            }
+        });
     }
 
     @Override
@@ -39,7 +53,11 @@ public class RecommendedAdapter extends RecyclerView.Adapter<RecommendedAdapter.
     }
 
     public void add(Item item) {
-        items.add(item);
+        this.items.add(item);
+    }
+
+    public void setListener(ClickListener listener) {
+        this.listener = listener;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
