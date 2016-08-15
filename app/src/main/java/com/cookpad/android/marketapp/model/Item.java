@@ -2,10 +2,12 @@ package com.cookpad.android.marketapp.model;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
+
 /**
  * Created by junya-ogasawara on 2016/08/15.
  */
-public class Item {
+public class Item implements Serializable {
     @SerializedName("id")
     private int id;
 

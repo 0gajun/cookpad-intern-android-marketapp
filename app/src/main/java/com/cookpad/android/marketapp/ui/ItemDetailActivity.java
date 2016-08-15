@@ -22,7 +22,7 @@ import rx.schedulers.Schedulers;
  */
 public class ItemDetailActivity extends AppCompatActivity {
     public enum INTENT_KEY {
-        ITEM_ID
+        ITEM_ID, ITEM
     }
 
     private ItemDetailActivityBinding binding;
@@ -34,16 +34,11 @@ public class ItemDetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.item_detail_activity);
 
-        itemId = getIntent().getIntExtra(INTENT_KEY.ITEM_ID.name(), -1);
-        if (itemId == -1) {
-            // TODO: エラーハンドリング
-        }
-
-        // TODO: ローディング画像
-
-        setupView(itemId);
+        Item item = (Item) getIntent().getSerializableExtra(INTENT_KEY.ITEM.name());
+        setupView(item);
     }
 
+    // DBにItem保存できたら使う
     private void setupView(int itemId) {
         MarketServiceHolder.getMarketService().getItem(itemId)
                 .subscribeOn(Schedulers.io())
@@ -56,13 +51,19 @@ public class ItemDetailActivity extends AppCompatActivity {
                 });
     }
 
+    private void setupView(Item item) {
+        setContent(item);
+    }
+
     private void setContent(Item item) {
+        setTitle(item.getName());
         Glide.with(this).load(item.getImageUrl()).into(binding.itemThumbnail);
 
         binding.itemDescription.setText(item.getDescription());
         binding.itemPrice.setText(getString(R.string.item_price_holder, item.getPrice()));
     }
 
+    //TODO: 動かないっぽいので後で直す
     public void onClickAddCartButton(View v) {
         Toast.makeText(this, "submit", Toast.LENGTH_SHORT).show();
     }

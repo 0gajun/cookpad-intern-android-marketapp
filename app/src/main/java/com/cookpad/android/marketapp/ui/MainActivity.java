@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClickItem(Item item, View view) {
                 Intent intent = new Intent(MainActivity.this, ItemDetailActivity.class);
-                intent.putExtra(ItemDetailActivity.INTENT_KEY.ITEM_ID.name(), item.getId());
+                intent.putExtra(ItemDetailActivity.INTENT_KEY.ITEM.name(), item);
                 startActivity(intent);
             }
         });
