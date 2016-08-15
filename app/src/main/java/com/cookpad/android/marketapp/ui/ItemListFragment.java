@@ -28,8 +28,10 @@ import rx.schedulers.Schedulers;
 public class ItemListFragment extends Fragment {
     private ItemsFragmentBinding binding;
 
-    public static RecommendedItemsFragment newInstance() {
-        return new RecommendedItemsFragment();
+    public static ItemListFragment newInstance(Bundle bundle) {
+        ItemListFragment f = new ItemListFragment();
+        f.setArguments(bundle);
+        return f;
     }
 
     @Override

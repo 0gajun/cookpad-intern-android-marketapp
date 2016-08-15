@@ -1,5 +1,6 @@
 package com.cookpad.android.marketapp.ui;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -45,7 +46,13 @@ public class CategoriesFragment extends Fragment {
         adapter.setListener(new CategoryAdapter.ClickListener() {
             @Override
             public void onClick(Category category, View v) {
-                //TODO: 遷移
+                if (getActivity().isFinishing()) {
+                    return;
+                }
+
+                Intent intent = new Intent(getActivity(), CategoryItemsActivity.class);
+                intent.putExtra(CategoryItemsActivity.INTENT_KEY.CATEGORY_ID.name(), category.getId());
+                startActivity(intent);
             }
         });
 

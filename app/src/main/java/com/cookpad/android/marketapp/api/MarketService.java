@@ -17,6 +17,10 @@ public interface MarketService {
     Observable<List<Item>> getRecommendedItems();
     @GET("items/{id}.json")
     Observable<Item> getItem(@Path("id") int id);
+    @GET("items.json")
+    Observable<List<Item>> getItems();
     @GET("categories.json")
     Observable<List<Category>> getCategories();
+    @GET("categories/{category_id}/items.json")
+    Observable<List<Item>> getCategoryItems(@Path("category_id") int categoryId);
 }
