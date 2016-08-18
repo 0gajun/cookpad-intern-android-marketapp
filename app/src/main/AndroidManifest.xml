@@ -21,6 +21,8 @@
         <activity android:name=".ui.ItemDetailActivity" />
         <activity android:name=".ui.CategoryItemsActivity" />
         <activity android:name=".ui.ItemsInCartActivity" />
+        <activity android:name=".ui.PurchaseConfirmationActivity"
+            android:label="@string/purchase_confirmation"/>
     </application>
 
 </manifest>

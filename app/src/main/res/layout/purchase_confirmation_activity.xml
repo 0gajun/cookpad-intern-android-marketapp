@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/recycler_view"
@@ -11,13 +11,21 @@
             android:layout_height="match_parent"
             android:layout_above="@+id/purchase_btn" />
 
+        <TextView
+            android:id="@+id/total_amount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_above="@+id/purchase_btn"
+            android:layout_centerHorizontal="true"
+            tools:text="合計金額"/>
+
         <Button
             android:id="@+id/purchase_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            tools:text="注文する"
+            android:text="@string/do_purchase"
             />
     </RelativeLayout>
 

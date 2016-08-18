@@ -6,4 +6,9 @@
     <string name="add_cart">カートに入れる</string>
     <string name="toast_msg_success_adding_cart">カートに追加しました</string>
     <string name="item_count_in_cart">カート内の個数 : %d個</string>
+    <string name="purchase_confirm_item_name">%1$s × %2$dケ</string>
+    <string name="purchase_confirm_amount">%d円</string>
+    <string name="total_amount">合計金額 : %d円</string>
+    <string name="purchase_confirmation">注文確認</string>
+    <string name="do_purchase">購入する</string>
 </resources>

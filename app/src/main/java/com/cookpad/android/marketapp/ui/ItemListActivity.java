@@ -16,13 +16,11 @@ import com.cookpad.android.marketapp.databinding.ItemListActivityBinding;
 public class ItemListActivity extends AppCompatActivity {
     private ItemListActivityBinding binding;
 
-
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.item_list_activity);
 
-        // TODO: ファクトリでまとめる
         FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
         transaction.replace(R.id.fragment_holder, getFragment());
         transaction.commit();

@@ -1,5 +1,6 @@
 package com.cookpad.android.marketapp.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -90,7 +91,7 @@ public class ItemsInCartFragment extends ItemListFragment {
     }
 
     private void doPurchase() {
-
+        startActivity(new Intent(getActivity(), PurchaseConfirmationActivity.class));
     }
 
     @Override
@@ -163,7 +164,6 @@ public class ItemsInCartFragment extends ItemListFragment {
 
                     }
                 });
-
     }
 
     private void incrementCartItem(Item item) {
