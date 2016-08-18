@@ -36,6 +36,7 @@ public class ItemsInCartFragment extends ItemListFragment {
     public static String TITLE = "カートの中身";
 
     private Map<Integer, CartItem> cartItemMap;
+    private boolean isSendable = false;
 
     public static ItemsInCartFragment newInstance() {
         return new ItemsInCartFragment();
@@ -76,7 +77,9 @@ public class ItemsInCartFragment extends ItemListFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.send_menu, menu);
+        if (isSendable) {
+            inflater.inflate(R.menu.send_menu, menu);
+        }
     }
 
     @Override
@@ -126,8 +129,14 @@ public class ItemsInCartFragment extends ItemListFragment {
                             map.put(ci.itemId, ci);
                         }
                         updateListView(map);
+                        updateOptionMenu(cartItems);
                     }
                 });
+    }
+
+    private void updateOptionMenu(List<CartItem> cartItems) {
+        isSendable = !cartItems.isEmpty();
+        getActivity().invalidateOptionsMenu();
     }
 
     private void updateListView(final Map<Integer, CartItem> itemMap) {
